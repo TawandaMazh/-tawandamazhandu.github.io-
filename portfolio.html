@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tawanda Mazhandu — Actuarial Mathematics Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0c0c10;
+  --ink2:#181820;
+  --ink3:#22222e;
+  --paper:#f4f0e8;
+  --paper2:#ede8dc;
+  --paper3:#e4ddd0;
+  --gold:#b5892a;
+  --gold2:#d4a843;
+  --gold-pale:#f5e9cc;
+  --rust:#8c3320;
+  --teal:#1a6b5a;
+  --slate:#3a4a5c;
+  --muted:#7a7060;
+  --muted2:#9a9080;
+  --border:rgba(12,12,16,0.1);
+  --border2:rgba(12,12,16,0.18);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Manrope',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+/* CURSOR */
+body{cursor:none}
+#cur{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform .12s}
+#cur-r{width:32px;height:32px;border:1.5px solid var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:transform .4s cubic-bezier(.25,.46,.45,.94);opacity:.5}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.25rem 4rem;
+  background:rgba(244,240,232,0.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Cormorant',serif;font-size:1.1rem;font-weight:600;
+  letter-spacing:0.05em;color:var(--ink);
+}
+.nav-logo span{color:var(--gold);font-style:italic}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{
+  font-family:'DM Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{
+  font-family:'DM Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);
+  padding:.55rem 1.25rem;text-decoration:none;transition:background .2s;
+}
+.nav-cta:hover{background:var(--gold)}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-rows:1fr auto;
+  padding-top:5rem;
+  position:relative;overflow:hidden;
+}
+.hero-main{
+  display:grid;grid-template-columns:1fr 420px;
+  align-items:end;
+  padding:5rem 4rem 3rem;
+  gap:4rem;
+}
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.75rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+h1{
+  font-family:'Cormorant',serif;
+  font-size:clamp(4rem,7vw,8rem);
+  font-weight:300;line-height:.9;
+  letter-spacing:-.03em;
+  margin-bottom:2.5rem;
+}
+h1 .italic{font-style:italic;color:var(--gold);display:block}
+.hero-bio{
+  font-size:.95rem;line-height:1.85;color:var(--muted);
+  max-width:520px;margin-bottom:2.5rem;
+}
+.hero-bio strong{color:var(--ink);font-weight:500}
+.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-dark{
+  font-family:'DM Mono',monospace;font-size:.62rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);
+  padding:.8rem 1.75rem;text-decoration:none;
+  transition:background .2s,transform .15s;display:inline-block;
+}
+.btn-dark:hover{background:var(--gold);transform:translateY(-2px)}
+.btn-ghost{
+  font-family:'DM Mono',monospace;font-size:.62rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  background:transparent;color:var(--muted);
+  padding:.8rem 1.75rem;text-decoration:none;
+  border:1px solid var(--border2);
+  transition:border-color .2s,color .2s,transform .15s;display:inline-block;
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+
+/* HERO SIDEBAR */
+.hero-sidebar{
+  display:flex;flex-direction:column;justify-content:flex-end;gap:0;
+}
+.hero-contact-item{
+  padding:1rem 1.25rem;
+  border:1px solid var(--border);
+  margin-bottom:-1px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--paper);transition:background .2s;
+}
+.hero-contact-item:hover{background:var(--paper2)}
+.hero-contact-item .lbl{
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--muted2);
+}
+.hero-contact-item .val{
+  font-size:.78rem;color:var(--ink);text-decoration:none;
+  transition:color .2s;
+}
+.hero-contact-item:hover .val{color:var(--gold)}
+
+/* HERO BOTTOM STRIP */
+.hero-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--border);
+}
+.strip-cell{
+  padding:1.5rem 2rem;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;gap:.3rem;
+}
+.strip-cell:last-child{border-right:none}
+.strip-num{
+  font-family:'Cormorant',serif;font-size:2.2rem;
+  font-weight:600;color:var(--gold);line-height:1;
+}
+.strip-lbl{
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+}
+
+/* SECTION BASE */
+section{padding:5rem 4rem;border-top:1px solid var(--border)}
+.sec-label{
+  font-family:'DM Mono',monospace;font-size:.6rem;
+  letter-spacing:.25em;text-transform:uppercase;
+  color:var(--muted2);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.75rem;
+}
+.sec-label::before{content:'';width:20px;height:1px;background:var(--gold)}
+h2{
+  font-family:'Cormorant',serif;
+  font-size:clamp(2.2rem,4vw,3.8rem);
+  font-weight:300;line-height:1;
+  letter-spacing:-.02em;margin-bottom:3rem;
+}
+h2 em{font-style:italic;color:var(--gold)}
+
+/* ABOUT */
+.about-layout{display:grid;grid-template-columns:1fr 340px;gap:5rem;align-items:start}
+.about-body p{
+  font-size:.95rem;line-height:1.9;color:var(--muted);margin-bottom:1.4rem;
+}
+.about-body p strong{color:var(--ink);font-weight:500}
+.skills-panel{background:var(--paper2);border:1px solid var(--border);padding:2rem}
+.skills-title{
+  font-family:'DM Mono',monospace;font-size:.6rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1px solid var(--border);
+  padding-bottom:.75rem;margin-bottom:1.25rem;
+}
+.skill-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.6rem 0;border-bottom:1px solid var(--border);
+}
+.skill-name{font-size:.78rem;color:var(--ink)}
+.skill-bar{width:72px;height:1.5px;background:var(--border2);position:relative}
+.skill-fill{position:absolute;left:0;top:0;height:100%;background:var(--gold)}
+
+/* LANG BADGES */
+.lang-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);margin-top:4rem;
+}
+.lang-cell{
+  background:var(--paper);padding:2rem 1.5rem;
+  display:flex;flex-direction:column;gap:.75rem;
+  transition:background .25s;
+}
+.lang-cell:hover{background:var(--gold-pale)}
+.lang-icon{
+  font-family:'Cormorant',serif;font-size:2rem;font-weight:700;
+  color:var(--gold);line-height:1;
+}
+.lang-name{
+  font-family:'DM Mono',monospace;font-size:.6rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ink);
+}
+.lang-desc{font-size:.75rem;color:var(--muted);line-height:1.6}
+
+/* PROJECTS */
+.proj-filter{
+  display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem;
+}
+.filter-btn{
+  font-family:'DM Mono',monospace;font-size:.6rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  padding:.45rem 1rem;border:1px solid var(--border2);
+  background:transparent;color:var(--muted);cursor:pointer;
+  transition:all .2s;
+}
+.filter-btn:hover,.filter-btn.active{
+  background:var(--ink);color:var(--paper);border-color:var(--ink);
+}
+.projects-wall{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.proj-card{
+  background:var(--paper);
+  padding:2rem;position:relative;
+  display:flex;flex-direction:column;
+  transition:background .25s;min-height:360px;
+}
+.proj-card:hover{background:var(--paper2)}
+.proj-card::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:0;height:2px;background:var(--gold);
+  transition:width .4s ease;
+}
+.proj-card:hover::after{width:100%}
+.proj-lang{
+  display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.25rem;
+}
+.lang-tag{
+  font-family:'DM Mono',monospace;font-size:.55rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:.2rem .55rem;font-weight:500;
+}
+.tag-python{background:#e8f0f5;color:#1a4a6e}
+.tag-r{background:#e8f5ec;color:#1a5c2e}
+.tag-sql{background:#f5ece8;color:#6e2a1a}
+.tag-excel{background:#eef5e8;color:#2e5c1a}
+.proj-num{
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  letter-spacing:.2em;color:var(--muted2);margin-bottom:.5rem;
+}
+.proj-title{
+  font-family:'Cormorant',serif;font-size:1.35rem;font-weight:600;
+  line-height:1.25;margin-bottom:.75rem;
+}
+.proj-desc{
+  font-size:.78rem;line-height:1.8;color:var(--muted);flex:1;margin-bottom:1.25rem;
+}
+.proj-pills{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.25rem}
+.proj-pill{
+  font-family:'DM Mono',monospace;font-size:.55rem;
+  letter-spacing:.08em;color:var(--muted);
+  border:1px solid var(--border);padding:.2rem .55rem;
+}
+.proj-link{
+  font-family:'DM Mono',monospace;font-size:.62rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold);text-decoration:none;
+  display:inline-flex;align-items:center;gap:.5rem;
+  transition:gap .2s;align-self:flex-start;
+  margin-top:auto;
+}
+.proj-link:hover{gap:.9rem}
+
+/* HIDDEN projects for filter */
+.proj-card.hidden{display:none}
+
+/* EDUCATION */
+.edu-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem}
+.edu-main{
+  border:1px solid var(--border);padding:2.5rem;
+  background:var(--ink);color:var(--paper);
+}
+.edu-year{
+  font-family:'DM Mono',monospace;font-size:.6rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;
+}
+.edu-degree{
+  font-family:'Cormorant',serif;font-size:1.9rem;
+  font-weight:300;line-height:1.15;margin-bottom:.5rem;
+  color:var(--paper);
+}
+.edu-degree em{font-style:italic;color:var(--gold)}
+.edu-uni{font-size:.85rem;color:rgba(244,240,232,.5);margin-bottom:2rem}
+.modules-title{
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);border-bottom:1px solid rgba(255,255,255,.1);
+  padding-bottom:.6rem;margin-bottom:1rem;
+}
+.modules-list{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.modules-list li{
+  font-size:.78rem;color:rgba(244,240,232,.7);
+  display:flex;gap:.6rem;align-items:center;
+}
+.modules-list li::before{content:'—';color:var(--gold);font-family:'DM Mono',monospace;font-size:.6rem}
+.certs-panel{display:flex;flex-direction:column;gap:1px;background:var(--border)}
+.cert-card{
+  background:var(--paper);padding:1.6rem 1.75rem;
+  display:flex;flex-direction:column;gap:.5rem;
+  transition:background .2s;flex:1;
+}
+.cert-card:hover{background:var(--gold-pale)}
+.cert-org{
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+}
+.cert-name{
+  font-family:'Cormorant',serif;font-size:1.05rem;font-weight:600;
+  line-height:1.3;
+}
+
+/* EXPERIENCE */
+.exp-items{display:flex;flex-direction:column}
+.exp-card{
+  display:grid;grid-template-columns:200px 1fr;
+  gap:3rem;padding:2.5rem 0;
+  border-bottom:1px solid var(--border);
+}
+.exp-card:first-child{border-top:1px solid var(--border)}
+.exp-meta-date{
+  font-family:'DM Mono',monospace;font-size:.6rem;
+  letter-spacing:.15em;color:var(--gold);margin-bottom:.4rem;
+}
+.exp-meta-co{font-size:.82rem;font-weight:500;color:var(--ink);margin-bottom:.2rem}
+.exp-meta-loc{font-size:.72rem;color:var(--muted2)}
+.exp-role{
+  font-family:'Cormorant',serif;font-size:1.4rem;font-weight:600;
+  margin-bottom:.9rem;
+}
+.exp-list{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.exp-list li{
+  font-size:.8rem;line-height:1.75;color:var(--muted);
+  display:flex;gap:.65rem;align-items:flex-start;
+}
+.exp-list li::before{
+  content:'○';color:var(--gold);flex-shrink:0;
+  font-size:.55rem;margin-top:.35rem;
+}
+
+/* CONTACT */
+.contact-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;background:var(--ink);
+  border:1px solid var(--ink);
+}
+.contact-left{
+  padding:4rem;
+  border-right:1px solid rgba(255,255,255,.07);
+}
+.contact-left h2{color:var(--paper);margin-bottom:1rem}
+.contact-left p{font-size:.9rem;color:rgba(244,240,232,.5);line-height:1.8;max-width:380px}
+.contact-right{padding:4rem;display:flex;flex-direction:column;gap:1px;justify-content:center}
+.contact-link-row{
+  padding:1.1rem 0;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.contact-link-row:last-child{border-bottom:none}
+.cl-label{
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(244,240,232,.3);
+}
+.cl-val{
+  font-size:.82rem;color:rgba(244,240,232,.8);
+  text-decoration:none;transition:color .2s;
+}
+.cl-val:hover{color:var(--gold)}
+
+/* FOOTER */
+footer{
+  padding:1.5rem 4rem;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--border);
+}
+.footer-copy{
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  letter-spacing:.1em;color:var(--muted2);
+}
+.footer-back{
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted2);text-decoration:none;transition:color .2s;
+}
+.footer-back:hover{color:var(--gold)}
+
+/* REVEAL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.reveal.on{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:1rem 1.5rem}
+  .nav-links,.nav-cta{display:none}
+  .hero-main{grid-template-columns:1fr;padding:4rem 1.5rem 2rem}
+  .hero-strip{grid-template-columns:repeat(2,1fr)}
+  section{padding:3.5rem 1.5rem}
+  .about-layout{grid-template-columns:1fr}
+  .lang-grid{grid-template-columns:1fr 1fr}
+  .projects-wall{grid-template-columns:1fr}
+  .edu-layout{grid-template-columns:1fr}
+  .exp-card{grid-template-columns:1fr;gap:1rem}
+  .contact-wrap{grid-template-columns:1fr}
+  .contact-left{border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}
+  footer{flex-direction:column;gap:.75rem;padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Tawanda <span>Mazhandu</span></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#experience">Experience</a>
+  </div>
+  <a href="#contact" class="nav-cta">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="border-top:none;padding:0">
+  <div class="hero-main">
+    <div>
+      <div class="hero-eyebrow">Actuarial Mathematics · University of Liverpool</div>
+      <h1>
+        Tawanda<br/>
+        <span class="italic">Mazhandu</span>
+      </h1>
+      <p class="hero-bio">
+        BSc graduate specialising in <strong>risk modelling</strong>, financial mathematics,
+        and stochastic analysis. I build actuarial models, pricing engines, and data pipelines
+        across <strong>Python, R, SQL, and Excel</strong> — translating complex uncertainty
+        into clear, quantifiable insight.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-dark">View Projects</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-sidebar">
+      <div class="hero-contact-item">
+        <span class="lbl">Email</span>
+        <a href="mailto:mazhandut@icloud.com" class="val">mazhandut@icloud.com</a>
+      </div>
+      <div class="hero-contact-item">
+        <span class="lbl">Phone</span>
+        <a href="tel:+447393417881" class="val">+44 7393 417 881</a>
+      </div>
+      <div class="hero-contact-item">
+        <span class="lbl">Location</span>
+        <span class="val">Liverpool, UK</span>
+      </div>
+      <div class="hero-contact-item">
+        <span class="lbl">Degree</span>
+        <span class="val">BSc (Hons) Actuarial Maths</span>
+      </div>
+      <div class="hero-contact-item">
+        <span class="lbl">Status</span>
+        <span class="val" style="color:var(--teal)">● Open to Opportunities</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-strip">
+    <div class="strip-cell">
+      <div class="strip-num">4</div>
+      <div class="strip-lbl">Languages</div>
+    </div>
+    <div class="strip-cell">
+      <div class="strip-num">8</div>
+      <div class="strip-lbl">Projects Built</div>
+    </div>
+    <div class="strip-cell">
+      <div class="strip-num">3+</div>
+      <div class="strip-lbl">Certifications</div>
+    </div>
+    <div class="strip-cell">
+      <div class="strip-num">AM92</div>
+      <div class="strip-lbl">Life Table Expertise</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <div class="sec-label">01 — About</div>
+    <h2>Risk, maths &amp; <em>real-world impact</em></h2>
+  </div>
+  <div class="about-layout">
+    <div class="about-body reveal">
+      <p>
+        I'm a dedicated actuarial mathematics graduate with a proven ability to apply
+        <strong>advanced quantitative methods</strong> to real-world financial problems.
+        My degree gave me deep expertise in life insurance mathematics, survival models,
+        stochastic processes, and probability theory — backed by hands-on project work
+        from first principles.
+      </p>
+      <p>
+        My technical toolkit spans four languages: <strong>Python</strong> for simulation
+        and numerical computation, <strong>R</strong> for statistical modelling and survival
+        analysis, <strong>SQL</strong> for data querying and financial databases, and
+        <strong>Excel</strong> for actuarial tables, financial models, and VBA automation.
+      </p>
+      <p>
+        Beyond the technical, I bring strong <strong>communication and leadership</strong>
+        skills developed through academic presentations, financial reporting during my
+        accounting apprenticeship, and as Social Media Executive of the Afro-Caribbean
+        Society at the University of Liverpool.
+      </p>
+    </div>
+    <div class="skills-panel reveal">
+      <div class="skills-title">Core Skills</div>
+      <div class="skill-row"><span class="skill-name">Risk Modelling</span>
+        <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
+      <div class="skill-row"><span class="skill-name">Life Insurance Maths</span>
+        <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
+      <div class="skill-row"><span class="skill-name">Stochastic Processes</span>
+        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+      <div class="skill-row"><span class="skill-name">Python</span>
+        <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
+      <div class="skill-row"><span class="skill-name">R / Statistics</span>
+        <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div>
+      <div class="skill-row"><span class="skill-name">Excel / VBA</span>
+        <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+      <div class="skill-row"><span class="skill-name">SQL</span>
+        <div class="skill-bar"><div class="skill-fill" style="width:74%"></div></div></div>
+      <div class="skill-row"><span class="skill-name">Data Analysis</span>
+        <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
+      <div class="skill-row"><span class="skill-name">Financial Modelling</span>
+        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+      <div class="skill-row"><span class="skill-name">Communication</span>
+        <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
+    </div>
+  </div>
+
+  <!-- Language showcase -->
+  <div class="lang-grid reveal">
+    <div class="lang-cell">
+      <div class="lang-icon">Py</div>
+      <div class="lang-name">Python</div>
+      <div class="lang-desc">NumPy, SciPy, Pandas, Matplotlib — Monte Carlo simulation, actuarial computation, option pricing, risk analytics</div>
+    </div>
+    <div class="lang-cell">
+      <div class="lang-icon">R</div>
+      <div class="lang-name">R</div>
+      <div class="lang-desc">Survival analysis, Kaplan-Meier estimators, Cox proportional hazard models, ggplot2 data visualisation</div>
+    </div>
+    <div class="lang-cell">
+      <div class="lang-icon">SQL</div>
+      <div class="lang-name">SQL</div>
+      <div class="lang-desc">Financial database querying, portfolio analytics, aggregations, window functions, joins for actuarial datasets</div>
+    </div>
+    <div class="lang-cell">
+      <div class="lang-icon">XL</div>
+      <div class="lang-name">Excel</div>
+      <div class="lang-desc">Actuarial life tables, financial models, commutation functions, scenario analysis, VBA macros, pivot reporting</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <div class="sec-label">02 — Projects</div>
+    <h2>Eight projects across <em>four languages</em></h2>
+  </div>
+  <div class="proj-filter reveal">
+    <button class="filter-btn active" data-filter="all">All (8)</button>
+    <button class="filter-btn" data-filter="python">Python</button>
+    <button class="filter-btn" data-filter="r">R</button>
+    <button class="filter-btn" data-filter="sql">SQL</button>
+    <button class="filter-btn" data-filter="excel">Excel</button>
+  </div>
+
+  <div class="projects-wall reveal">
+
+    <!-- 1: Python -->
+    <div class="proj-card" data-langs="python">
+      <div class="proj-lang">
+        <span class="lang-tag tag-python">Python</span>
+      </div>
+      <div class="proj-num">01</div>
+      <div class="proj-title">AM92 Life Table Calculator</div>
+      <p class="proj-desc">Full actuarial toolkit computing mortality probabilities (qx, nPx, nQx), expected future lifetimes, and present values of whole-life, term, and endowment policies using the standard AM92 table. Includes commutation functions and net premium calculations.</p>
+      <div class="proj-pills">
+        <span class="proj-pill">AM92 Mortality</span>
+        <span class="proj-pill">NumPy</span>
+        <span class="proj-pill">Life Insurance</span>
+        <span class="proj-pill">Matplotlib</span>
+      </div>
+      <a href="https://github.com" class="proj-link" target="_blank">View on GitHub →</a>
+    </div>
+
+    <!-- 2: Python -->
+    <div class="proj-card" data-langs="python">
+      <div class="proj-lang">
+        <span class="lang-tag tag-python">Python</span>
+      </div>
+      <div class="proj-num">02</div>
+      <div class="proj-title">Monte Carlo Risk Simulator</div>
+      <p class="proj-desc">Stochastic risk engine running 10,000+ simulations for multi-asset portfolios using Geometric Brownian Motion with Cholesky-correlated assets. Computes VaR (95% &amp; 99%), Expected Shortfall, Sharpe ratio, max drawdown, and stress-test scenarios.</p>
+      <div class="proj-pills">
+        <span class="proj-pill">GBM Simulation</span>
+        <span class="proj-pill">VaR / CVaR</span>
+        <span class="proj-pill">SciPy</span>
+        <span class="proj-pill">Cholesky</span>
+      </div>
+      <a href="https://github.com" class="proj-link" target="_blank">View on GitHub →</a>
+    </div>
+
+    <!-- 3: Python -->
+    <div class="proj-card" data-langs="python">
+      <div class="proj-lang">
+        <span class="lang-tag tag-python">Python</span>
+      </div>
+      <div class="proj-num">03</div>
+      <div class="proj-title">Option Pricing Engine</div>
+      <p class="proj-desc">Complete derivatives pricing toolkit implementing Black-Scholes, Binomial Trees, and Monte Carlo methods. Computes all five Greeks (Delta, Gamma, Theta, Vega, Rho), implied volatility via Newton-Raphson, and generates sensitivity dashboards.</p>
+      <div class="proj-pills">
+        <span class="proj-pill">Black-Scholes</span>
+        <span class="proj-pill">Binomial Tree</span>
+        <span class="proj-pill">Greeks</span>
+        <span class="proj-pill">Implied Vol</span>
+      </div>
+      <a href="https://github.com" class="proj-link" target="_blank">View on GitHub →</a>
+    </div>
+
+    <!-- 4: R -->
+    <div class="proj-card" data-langs="r">
+      <div class="proj-lang">
+        <span class="lang-tag tag-r">R</span>
+      </div>
+      <div class="proj-num">04</div>
+      <div class="proj-title">Survival Model Analysis</div>
+      <p class="proj-desc">Statistical survival analysis using Kaplan-Meier estimators and Cox Proportional Hazard models applied to actuarial mortality datasets. Estimates survival probabilities, hazard ratios, and tests proportional hazards assumptions. Visualised with ggplot2 survival curves.</p>
+      <div class="proj-pills">
+        <span class="proj-pill">Kaplan-Meier</span>
+        <span class="proj-pill">Cox Model</span>
+        <span class="proj-pill">ggplot2</span>
+        <span class="proj-pill">survival pkg</span>
+      </div>
+      <a href="https://github.com" class="proj-link" target="_blank">View on GitHub →</a>
+    </div>
+
+    <!-- 5: R -->
+    <div class="proj-card" data-langs="r">
+      <div class="proj-lang">
+        <span class="lang-tag tag-r">R</span>
+      </div>
+      <div class="proj-num">05</div>
+      <div class="proj-title">Stochastic Claims Modelling</div>
+      <p class="proj-desc">Compound Poisson process model for insurance claims simulation. Fits claim frequency (Poisson/Negative Binomial) and severity (Gamma, Log-normal, Pareto) distributions to historical data using maximum likelihood estimation. Outputs ruin probability estimates.</p>
+      <div class="proj-pills">
+        <span class="proj-pill">Compound Poisson</span>
+        <span class="proj-pill">MLE Fitting</span>
+        <span class="proj-pill">Ruin Theory</span>
+        <span class="proj-pill">fitdistrplus</span>
+      </div>
+      <a href="https://github.com" class="proj-link" target="_blank">View on GitHub →</a>
+    </div>
+
+    <!-- 6: SQL -->
+    <div class="proj-card" data-langs="sql">
+      <div class="proj-lang">
+        <span class="lang-tag tag-sql">SQL</span>
+      </div>
+      <div class="proj-num">06</div>
+      <div class="proj-title">Actuarial Portfolio Database</div>
+      <p class="proj-desc">Relational database schema for managing life insurance policy portfolios. Queries compute reserve amounts, premium income, lapse rates, and mortality experience vs AM92 expected. Includes window functions for cohort tracking and time-series reserve development.</p>
+      <div class="proj-pills">
+        <span class="proj-pill">PostgreSQL</span>
+        <span class="proj-pill">Window Functions</span>
+        <span class="proj-pill">Reserve Calc</span>
+        <span class="proj-pill">Policy Data</span>
+      </div>
+      <a href="https://github.com" class="proj-link" target="_blank">View on GitHub →</a>
+    </div>
+
+    <!-- 7: SQL -->
+    <div class="proj-card" data-langs="sql">
+      <div class="proj-lang">
+        <span class="lang-tag tag-sql">SQL</span>
+      </div>
+      <div class="proj-num">07</div>
+      <div class="proj-title">Financial Risk Data Pipeline</div>
+      <p class="proj-desc">End-to-end SQL pipeline for financial risk reporting. Ingests daily market data, calculates rolling VaR, tracks position-level P&amp;L, and produces regulatory-style risk summaries. Built with CTEs and stored procedures for automated daily reporting.</p>
+      <div class="proj-pills">
+        <span class="proj-pill">CTEs</span>
+        <span class="proj-pill">Rolling VaR</span>
+        <span class="proj-pill">P&amp;L Attribution</span>
+        <span class="proj-pill">Stored Procs</span>
+      </div>
+      <a href="https://github.com" class="proj-link" target="_blank">View on GitHub →</a>
+    </div>
+
+    <!-- 8: Excel -->
+    <div class="proj-card" data-langs="excel">
+      <div class="proj-lang">
+        <span class="lang-tag tag-excel">Excel</span>
+      </div>
+      <div class="proj-num">08</div>
+      <div class="proj-title">Actuarial Life Table Workbook</div>
+      <p class="proj-desc">Comprehensive Excel workbook computing full AM92 commutation functions (Dx, Nx, Cx, Mx), policy reserves (Prospective &amp; Retrospective), net premiums, and surrender values. Includes scenario analysis with interest rate sensitivity tables and a VBA-powered valuation macro.</p>
+      <div class="proj-pills">
+        <span class="proj-pill">Commutation Fns</span>
+        <span class="proj-pill">Policy Reserves</span>
+        <span class="proj-pill">VBA Macro</span>
+        <span class="proj-pill">Scenario Tables</span>
+      </div>
+      <a href="https://github.com" class="proj-link" target="_blank">View on GitHub →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="reveal">
+    <div class="sec-label">03 — Education &amp; Certifications</div>
+    <h2>Academic <em>foundation</em></h2>
+  </div>
+  <div class="edu-layout reveal">
+    <div class="edu-main">
+      <div class="edu-year">Sep 2021 — Jul 2025</div>
+      <div class="edu-degree">BSc (Hons) <em>Actuarial Mathematics</em></div>
+      <div class="edu-uni">University of Liverpool, United Kingdom</div>
+      <div class="modules-title">Relevant Modules</div>
+      <ul class="modules-list">
+        <li>Applied Stochastic Models</li>
+        <li>Life Insurance Mathematics</li>
+        <li>Financial Mathematics</li>
+        <li>Risk Modelling &amp; Simulation</li>
+        <li>Probability &amp; Statistics</li>
+        <li>Survival Models</li>
+        <li>Actuarial Science</li>
+        <li>AM92 Life Table Calculations</li>
+      </ul>
+    </div>
+    <div class="certs-panel">
+      <div class="cert-card">
+        <div class="cert-org">IBM</div>
+        <div class="cert-name">Data Analyst Professional Certificate</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-org">Yale University</div>
+        <div class="cert-name">Financial Markets</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-org">Coursera</div>
+        <div class="cert-name">Investment Risk Management</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-org">University of Liverpool</div>
+        <div class="cert-name">Actuarial Life Table Project (AM92)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="reveal">
+    <div class="sec-label">04 — Experience</div>
+    <h2>Where I've <em>applied</em> it</h2>
+  </div>
+  <div class="exp-items">
+    <div class="exp-card reveal">
+      <div class="exp-meta">
+        <div class="exp-meta-date">Jun 2022 — Aug 2022</div>
+        <div class="exp-meta-co">Unlimited Gifts Ltd.</div>
+        <div class="exp-meta-loc">Lusaka, Zambia</div>
+      </div>
+      <div>
+        <div class="exp-role">Accounting Apprentice</div>
+        <ul class="exp-list">
+          <li>Assisted with financial management and budgeting tasks, gaining direct exposure to risk identification and financial forecasting methods.</li>
+          <li>Analysed financial data to support decision-making, reducing uncertainty in operational financial planning and reporting.</li>
+          <li>Collaborated with senior staff to prepare detailed financial reports and stakeholder presentations, developing professional communication skills.</li>
+          <li>Applied early actuarial thinking to financial uncertainty analysis — identifying cost overrun risks and communicating findings clearly.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-meta">
+        <div class="exp-meta-date">Sep 2022 — Jun 2023</div>
+        <div class="exp-meta-co">University of Liverpool</div>
+        <div class="exp-meta-loc">Liverpool, United Kingdom</div>
+      </div>
+      <div>
+        <div class="exp-role">Social Media Executive — Afro-Caribbean Society</div>
+        <ul class="exp-list">
+          <li>Led digital communications and content strategy for one of the university's most active cultural societies.</li>
+          <li>Coordinated event coverage, community engagement campaigns, and grew the society's online presence across multiple platforms.</li>
+          <li>Demonstrated leadership, project management, and communication skills in a fast-paced voluntary role alongside a demanding degree.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding:0;border-top:1px solid var(--border)">
+  <div class="contact-wrap reveal">
+    <div class="contact-left">
+      <div class="sec-label" style="color:rgba(244,240,232,.4)">05 — Contact</div>
+      <h2 style="color:var(--paper)">Let's <em>connect</em></h2>
+      <p>Whether you're looking for an actuarial graduate, a risk analyst, or someone who can bridge maths and data — I'd love to hear from you.</p>
+    </div>
+    <div class="contact-right">
+      <div class="contact-link-row">
+        <span class="cl-label">Email</span>
+        <a href="mailto:mazhandut@icloud.com" class="cl-val">mazhandut@icloud.com</a>
+      </div>
+      <div class="contact-link-row">
+        <span class="cl-label">Phone</span>
+        <a href="tel:+447393417881" class="cl-val">+44 7393 417 881</a>
+      </div>
+      <div class="contact-link-row">
+        <span class="cl-label">Location</span>
+        <span class="cl-val">Liverpool, United Kingdom</span>
+      </div>
+      <div class="contact-link-row">
+        <span class="cl-label">GitHub</span>
+        <a href="https://github.com" class="cl-val">github.com/tawandamazhandu</a>
+      </div>
+      <div class="contact-link-row">
+        <span class="cl-label">LinkedIn</span>
+        <a href="https://linkedin.com" class="cl-val">linkedin.com/in/tawandamazhandu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2025 Tawanda Mazhandu · BSc Actuarial Mathematics, University of Liverpool</span>
+  <a href="#home" class="footer-back">↑ Back to top</a>
+</footer>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`});
+function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;curR.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(animRing)}
+animRing();
+
+// Project filter
+const btns=document.querySelectorAll('.filter-btn');
+const cards=document.querySelectorAll('.proj-card');
+btns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    btns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    cards.forEach(c=>{
+      if(f==='all'||c.dataset.langs===f){c.classList.remove('hidden')}
+      else{c.classList.add('hidden')}
+    });
+  });
+});
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
